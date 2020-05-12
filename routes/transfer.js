@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
-const ethers = require('ethers');
-const contractAddress = '0xc82c3621ad032bCB46F433C38FF74C7EaA0ec960' ;
-const abi = [
+var express = require('express'); // Express
+var router = express.Router(); // Creating express route
+const ethers = require('ethers'); // Requiring Ethers, which is a very useful library that allows us to call Smart Contract Functions from the Backend
+const CONTRACT_ADDRESS = '0xc82c3621ad032bCB46F433C38FF74C7EaA0ec960' ; // insert your contract address from Ganache
+const CONTRACT_ABI = [
     {
       "inputs": [
         {
@@ -133,23 +133,47 @@ const abi = [
       "stateMutability": "nonpayable",
       "type": "function"
     }
-];
+]; // insert the ABI for your smart contract from Ganache
 
-let url = "HTTP://127.0.0.1:7545";
-let customHttpProvider = new ethers.providers.JsonRpcProvider(url);
-let contract = new ethers.Contract(contractAddress, abi, customHttpProvider.getSigner(0));
+// The variable "URL" will be where your server is being hosted, if you are testing locally on Ganache then go to your workspace 
+// in Ganache and copy and paste the RPC Server. It will look something like this: "HTTP://127.0.0.1:7545".
+// We are testing our DApp locally so we need to set "URL" to the RPC Server on Ganache.
+let URL = "HTTP://127.0.0.1:7545";
 
-//Need to add in the transfer thing here
+// Further information can be provided on the ethers.js documentation found at this link: https://docs.ethers.io/ethers.js/html/index.html
 
-router.post('/getBalance', async function (req, res, next) {
-	let balance = await contract.getBalance(req.body.wallet)
-	var responseMessage = (`${req.body.wallet} has ${balance} tokens`)
-	res.send(responseMessage);
+// Yet again, we are hosting this locally so we will create a Provider on Ethers.js (Ethers.js > Web3.js!)
+// You can use any provider you want here is a short 
+// list of a few popular providers off the top of my head:
+// .getDefaultProvider([network = "ANY ETHEREUM TEST NETWORK"]) ~ use .getDefaultProvider() if you ARE NOT locally hosting an Ethereum Node
+// .EtherscanProvider([network = "ANY ETHEREUM TEST NETWORK"] or [API_TOKEN]) ~ use .EtherscanProvider if you are using Etherscan's blockchain web API
+// .InfuraProvider([network = "ANY ETHEREUM TEST NETWORK"] or [API_ACCESS_TOKEN]) ~ use .InfuraProvider if you connect to INFURA's network of Ethereum Nodes
+// .JsonRpcProvider([URL = "LOCALLY HOSTED RPC SERVER"] or [NETWORK]) ~ use .JsonRpcProvider if you ARE locally hosting an Ethereum Node or if you want to connect to a test network such as "ropsten"
+// .Web3Provider(web3Provider or [network]) ~ Similar to JsonRpcProvider
+// .FallbackProvider(providers) ~ Inherits from Provider it's a fallback to other providers
+// .IpcProvider(path or [network]) ~ Connected to the JsonRpcProvider over IPC (or pipes) to an Ethereum Node, like Geth or Parity
+
+let customHttpProvider = new ethers.providers.JsonRpcProvider(URL); // We are hosting locally so the best suited method is .JsonRpcProvider and we pass the RPC Server stated before
+
+let Contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, customHttpProvider.getSigner(0)); // three parameters (CONTRACT_ADDRESS, CONTRACT_ABI, customHttpProvider.getSigner(0));
+
+router.post('/transfer', async function(req, res, next) { // creating a post request to the '/transfer' endpoint blahy
+    let contractWithSigner = await Contract.connect(req.body.sender);
+    let contractTransfer = await contractWithSigner.transfer(req.body.receiver, req.body.amount)
+    res.send(contractTransfer);
 });
 
-router.post('/totalsupply', async function (req, res, next) {
-	let totalSupply = await contract.totalSupply();
-	res.send(totalSupply);
+
+router.post('/getBalance', async function (req, res, next) { // Creating a post request to the '/getBalance' endpoint where we call the Smart Contract Methods
+  // The only key in the request we receive will be a wallet, which will contain the address of the user
+  const BALANCE = await Contract.getBalance( req.body.wallet ); // Calling the smart contract function and passing in the wallet we want to retrieve the balance of
+  let RESPONSE_MESSAGE = (`${req.body.wallet} has a balance of ${BALANCE} token`); // Creating a message to send back to the frontend
+  res.send(RESPONSE_MESSAGE); // Sending a response that contains the "RESPONSE_MESSAGE"
 });
 
+router.get('/totalsupply', async function (req, res, next) { // Creating a get request to the '/totalsupply' endpoint
+	let totalSupply = await Contract.totalSupply();
+    res.send(totalSupply);
+}); 
+// imma add my comments, wanna call?
 module.exports = router;
