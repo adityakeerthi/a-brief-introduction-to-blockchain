@@ -12,14 +12,14 @@ contract EarthCoin {
   mapping(address => uint256) public balance;
 
   constructor(string memory _name, string memory _symbol, uint256 _coinSupply) public { //public means other contracts can call these data types
-  //Creating our coin upon deployment
-  owner = msg.sender;
-  name = _name;
-  symbol = _symbol;
-  coinSupply = _coinSupply;
+    //Creating our coin upon deployment
+    owner = msg.sender;
+    name = _name;
+    symbol = _symbol;
+    coinSupply = _coinSupply;
 
-  //Initalize the supply to contract creator
-  balance[owner] = coinSupply;
+    //Initalize the supply to contract creator
+    balance[owner] = coinSupply;
   }
   //Event Listener for transcations over this smart contract
   event Transfer(address indexed _from, address indexed _to, uint256 _value);
