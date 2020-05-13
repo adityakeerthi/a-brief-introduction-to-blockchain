@@ -1,22 +1,161 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Sura&display=swap');
+
+body {
   text-align: center;
+  font-family: 'Sura', serif;
 }
 
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+h5 {
+  margin: 1vmin;
+  padding-left: 2vmin;
+  padding-right: 2vmin;
+  padding-top: 4vmin;
+  padding-bottom: 4vmin;
+  font-size: 3vmax;
   color: white;
 }
 
-.App-link {
-  color: #09d3ac;
+h4 {
+  margin: 1vmin;
+  padding-left: 2vmin;
+  padding-right: 2vmin;
+  padding-top: 4vmin;
+  padding-bottom: 4vmin;
+  font-size: 2.5vmax;
+  color: white;
+}
+
+h3 {
+  margin: 1vmin;
+  padding-left: 2vmin;
+  padding-right: 2vmin;
+  padding-top: 4vmin;
+  padding-bottom: 4vmin;
+  font-size: 2vmax;
+  color: white;
+}
+
+h2 {
+  margin: 1vmin;
+  padding-left: 2vmin;
+  padding-right: 2vmin;
+  padding-top: 4vmin;
+  padding-bottom: 4vmin;
+  font-size: 1vmax;
+  color: white;
+}
+
+h2 {
+  margin: 1vmin;
+  padding-left: 2vmin;
+  padding-right: 2vmin;
+  padding-top: 4vmin;
+  padding-bottom: 4vmin;
+  font-size: 1vmax;
+  color: white;
+}
+
+a {
+  margin: 1vmin;
+  padding-left: 2vmin;
+  padding-right: 2vmin;
+  padding-top: 4vmin;
+  padding-bottom: 4vmin;
+  font-size: 1vmax;
+  color: white;
+}
+
+button {
+  margin: 2vmin;
+  padding: 1vmin;
+  padding-left: 2vmin;
+  padding-right: 2vmin;
+  border-radius: 5%;
+  font-size: 1.5vmax;
+  font-family: 'Sura', serif;
+  background-color: #02386E;
+  border-color: #02386E;
+  color: white;
+}
+
+label {
+  margin: 5vmin;
+  padding-left: 2vmin;
+  padding-right: 2vmin;
+  padding-top: 4vmin;
+  padding-bottom: 4vmin;
+  font-size: 2vmax;
+  /* font-weight: bold; */
+  color: white;
+}
+
+input {
+  background-color: #232323;
+  outline-color: #232323;
+  border-color: #232323;
+  padding: 2vmin;
+  font-size: 1vmax;
+  color: #958856;
+  font-family: 'Sura', serif;
+}
+
+.banner {
+  background-color: #fff;
+  color: #000B18;
+  /* font-weight: bold; */
+  font-size: 1.25vmax;
+  margin: 3vmax;
+  padding-top: 4vmax;
+  padding-bottom: 4vmax;
+  padding-right: 1vmax;
+  padding-left: 1vmax;
+  border-radius: 20%;
+  text-align: center;
+}
+
+.column {
+  float: left;
+  width: 20%;
+  height: 100vh;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.transferAddress {
+  background-color: #000B18;
+  height: 100vh;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.queryBalance {
+  background-color: #00172D;
+  height: 100vh;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.profile {
+  background-color: #00264D;
+  height: 100vh;
+  position: relative;
+}
+
+.totalSupply {
+  background-color: #02386E;
+  height: 100vh;
+  position: relative;
+}
+
+.application {
+  background-color: #00498D;
+  height: 100vh;
+
+  position: relative;
 }

@@ -155,25 +155,26 @@ let URL = "HTTP://127.0.0.1:7545";
 
 let customHttpProvider = new ethers.providers.JsonRpcProvider(URL); // We are hosting locally so the best suited method is .JsonRpcProvider and we pass the RPC Server stated before
 
+// router.post('/transfer', async function(req, res, next) { // creating a post request to the '/transfer' endpoint blahy
+//    //let wallet = new ethers.Wallet(req.body.wallet)
+//     let transferContract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, req.body.wallet);
+//     let contractTransfer = await transferContract.transfer(req.body.receiver, req.body.amount)
+    
+//     res.send(contractTransfer);
+// });
+
 let Contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, customHttpProvider.getSigner(0)); // three parameters (CONTRACT_ADDRESS, CONTRACT_ABI, customHttpProvider.getSigner(0));
-
-router.post('/transfer', async function(req, res, next) { // creating a post request to the '/transfer' endpoint blahy
-    let contractWithSigner = await Contract.connect(req.body.sender);
-    let contractTransfer = await contractWithSigner.transfer(req.body.receiver, req.body.amount)
-    res.send(contractTransfer);
-});
-
 
 router.post('/getBalance', async function (req, res, next) { // Creating a post request to the '/getBalance' endpoint where we call the Smart Contract Methods
   // The only key in the request we receive will be a wallet, which will contain the address of the user
   const BALANCE = await Contract.getBalance( req.body.wallet ); // Calling the smart contract function and passing in the wallet we want to retrieve the balance of
-  let RESPONSE_MESSAGE = (`${req.body.wallet} has a balance of ${BALANCE} token`); // Creating a message to send back to the frontend
+  let RESPONSE_MESSAGE = (`${BALANCE}`); // Creating a message to send back to the frontend
   res.send(RESPONSE_MESSAGE); // Sending a response that contains the "RESPONSE_MESSAGE"
 });
 
 router.get('/totalsupply', async function (req, res, next) { // Creating a get request to the '/totalsupply' endpoint
 	let totalSupply = await Contract.totalSupply();
-    res.send(totalSupply);
+    res.send(`${totalSupply}`);
 }); 
 // imma add my comments, wanna call?
 module.exports = router;
