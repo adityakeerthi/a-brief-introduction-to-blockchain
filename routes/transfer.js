@@ -176,5 +176,5 @@ router.get('/totalsupply', async function (req, res, next) { // Creating a get r
 	let totalSupply = await Contract.totalSupply();
     res.send(`${totalSupply}`);
 }); 
-// imma add my comments, wanna call?
+
 module.exports = router;
